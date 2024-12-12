@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" 
+      navigatingTo="onNavigatingTo"
+      class="page">
+    <ActionBar title="SnapCollage" class="bg-purple-600 text-white">
+        <NavigationButton visibility="collapsed" />
+    </ActionBar>
+
+    <GridLayout rows="auto, *">
+        <!-- Header Section -->
+        <StackLayout row="0" class="p-4 bg-purple-100">
+            <Label text="Create Beautiful Video Collages" class="text-xl font-bold text-purple-800 text-center" />
+            <Label text="Upload photos, add effects, and share!" class="text-sm text-purple-600 text-center" />
+        </StackLayout>
+
+        <!-- Main Content -->
+        <ScrollView row="1">
+            <StackLayout class="p-4">
+                <!-- Loading Indicator -->
+                <ActivityIndicator busy="{{ isLoading }}" class="m-4" />
+
+                <!-- Action Buttons -->
+                <Button text="Select Photos" 
+                        tap="{{ onSelectPhotos }}" 
+                        class="bg-purple-600 text-white font-bold p-4 rounded-lg m-2"
+                        isEnabled="{{ !isLoading }}" />
+                        
+                <Button text="Take Photo" 
+                        tap="{{ onTakePhoto }}" 
+                        class="bg-purple-500 text-white font-bold p-4 rounded-lg m-2"
+                        isEnabled="{{ !isLoading }}" />
+                
+                <!-- Selected Photos Grid -->
+                <GridLayout rows="auto" columns="*, *, *" class="mt-4" 
+                           visibility="{{ hasPhotos ? 'visible' : 'collapsed' }}">
+                    <Repeater items="{{ selectedPhotos }}">
+                        <Repeater.itemTemplate>
+                            <Image src="{{ path }}" 
+                                   stretch="aspectFill" 
+                                   height="100" 
+                                   class="rounded-lg m-1" />
+                        </Repeater.itemTemplate>
+                    </Repeater>
+                </GridLayout>
+
+                <!-- Create Collage Button -->
+                <Button text="Create Collage" 
+                        tap="{{ onCreateCollage }}" 
+                        class="bg-green-600 text-white font-bold p-4 rounded-lg m-2 mt-4"
+                        isEnabled="{{ !isLoading }}"
+                        visibility="{{ hasPhotos ? 'visible' : 'collapsed' }}" />
+            </StackLayout>
+        </ScrollView>
+    </GridLayout>
+</Page>
